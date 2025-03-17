@@ -1,1 +1,1 @@
-variable "ecr_repo_name" { default = "hub-contratos" }
+variable "ecr_repo_name" { default = "hub-cobrancas" }
