@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "hub-contratos-terraform-state"
+    bucket         = "hub-cobranca-terraform-state"
     key            = "ecr/terraform.tfstate"
     region         = "sa-east-1"
   }
