@@ -6,9 +6,7 @@ on:
       - main
 
 jobs:
-
   decidir:
-    needs: block_non_develop
     runs-on: ubuntu-latest
     outputs:
       destroy_flag: ${{ steps.check.outputs.destroy_flag }}
