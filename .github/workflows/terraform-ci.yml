@@ -11,10 +11,12 @@ jobs:
     steps:
       - name: Fail if PR is not from develop
         run: |
-          echo "Source branch: ${{ github.head_ref }}"
-          if [[ "${{ github.head_ref }}" != "develop" ]]; then
+          echo "Source branch: ${{ github.event.pull_request.head.ref }}"
+          if [[ "${{ github.event.pull_request.head.ref }}" != "develop" ]]; then
             echo "❌ Only PRs from 'develop' branch are allowed to merge into 'main'."
             exit 1
+          else
+            echo "✅ Merge allowed: origin is 'develop'."
           fi
 
   decidir:
