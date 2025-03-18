@@ -1,23 +1,46 @@
-name: Teste Comentário Ponto no PR
+name: Adicionar Checklist obrigatório para Merge
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, edited, reopened]
 
 jobs:
-  comentar-ponto:
+  add-checklist-comment:
     runs-on: ubuntu-latest
     steps:
-      - name: Adiciona ponto no PR
+      - name: Adicionar checklist nos comentários do PR
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const prNumber = context.payload.pull_request.number;
+            const checklist = `
+  ### ✅ Checklist obrigatório para merge
 
-            await github.rest.issues.createComment({
-              issue_number: prNumber,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: ".."
-            });
+  - [ ] O código foi testado localmente?
+  - [ ] O código está coberto por testes automatizados?
+  - [ ] A documentação foi atualizada?
+  - [ ] A revisão foi feita por outro desenvolvedor?
+  
+  > Marque todos os itens antes de aprovar este PR.
+  `;
+  
+  const prNumber = context.payload.pull_request.number;
+  
+  const existingComments = await github.rest.issues.listComments({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    issue_number: prNumber
+  });
+  
+  const checklistExists = existingComments.data.find(comment =>
+    comment.body && comment.body.includes("Checklist obrigatório para merge")
+  );
+  
+  if (!checklistExists) {
+    await github.rest.issues.createComment({
+      issue_number: prNumber,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      body: checklist
+    });
+  }
