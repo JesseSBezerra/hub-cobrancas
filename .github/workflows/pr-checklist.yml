@@ -2,7 +2,10 @@ name: Adicionar Checklist obrigatório para Merge
 
 on:
   pull_request:
-    types: [opened, edited, reopened]
+    types:
+      - opened
+      - edited
+      - reopened
 
 jobs:
   add-checklist-comment:
@@ -14,7 +17,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const checklist = `
-  ### Checklist obrigatório para merge
+  ### ✅ Checklist obrigatório para merge
 
   - [ ] O código foi testado localmente?
   - [ ] O código está coberto por testes automatizados?
