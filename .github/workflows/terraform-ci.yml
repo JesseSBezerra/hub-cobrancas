@@ -6,7 +6,19 @@ on:
       - main
 
 jobs:
+  block_non_develop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if PR is not from develop
+        run: |
+          echo "Source branch: ${{ github.head_ref }}"
+          if [[ "${{ github.head_ref }}" != "develop" ]]; then
+            echo "❌ Only PRs from 'develop' branch are allowed to merge into 'main'."
+            exit 1
+          fi
+
   decidir:
+    needs: block_non_develop
     runs-on: ubuntu-latest
     outputs:
       destroy_flag: ${{ steps.check.outputs.destroy_flag }}
