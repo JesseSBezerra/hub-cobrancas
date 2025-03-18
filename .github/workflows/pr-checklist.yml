@@ -2,10 +2,7 @@ name: Adicionar Checklist obrigatório para Merge
 
 on:
   pull_request:
-    types:
-      - opened
-      - edited
-      - reopened
+    types: [opened, edited, reopened]
 
 jobs:
   add-checklist-comment:
