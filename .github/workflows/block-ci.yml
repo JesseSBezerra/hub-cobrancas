@@ -1,0 +1,20 @@
+name: Block PRs not from develop
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  block-non-develop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source branch
+        run: |
+          echo "Source branch: ${{ github.event.pull_request.head.ref }}"
+          if [[ "${{ github.event.pull_request.head.ref }}" != "develop" ]]; then
+            echo "❌ Only PRs from 'develop' branch are allowed to merge into 'main'."
+            exit 1
+          else
+            echo "✅ Merge allowed: origin is 'develop'."
+          fi
