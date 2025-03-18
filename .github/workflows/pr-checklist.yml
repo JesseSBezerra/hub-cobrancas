@@ -32,11 +32,11 @@ jobs:
     issue_number: prNumber
   });
   
-  const checklistAlreadyExists = existingComments.data.find(comment =>
-    comment.body && comment.body.includes("✅ Checklist obrigatório para merge")
+  const checkListAlreadyExists = existingComments.data.find(comment =>
+    comment.body && comment.body.includes("Checklist obrigatório para merge")
   );
   
-  if (!checklistAlreadyExists) {
+  if (!checkListAlreadyExists) {
     await github.rest.issues.createComment({
       issue_number: prNumber,
       owner: context.repo.owner,
