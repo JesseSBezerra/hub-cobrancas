@@ -41,7 +41,6 @@ jobs:
           java-version: '17'
 
       - name: Build com Maven
-        if: needs.decidir.outputs.destroy_flag != 'true'
         run: mvn clean package -DskipTests
 
       - name: Definir tag única da imagem
